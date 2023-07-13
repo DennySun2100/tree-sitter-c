@@ -205,7 +205,7 @@ module.exports = grammar({
       optional($.ms_call_modifier),
       $._declaration_specifiers,
       field('declarator', $._declarator),
-      field('body', $.compound_statement),
+      field('body', choice($.compound_statement, $.SEH_try_statement)),
     ),
 
     declaration: $ => seq(
@@ -640,6 +640,7 @@ module.exports = grammar({
       $.break_statement,
       $.continue_statement,
       $.goto_statement,
+      $.SEH_try_statement,
     ),
 
     labeled_statement: $ => seq(
@@ -730,6 +731,23 @@ module.exports = grammar({
       'goto',
       field('label', $._statement_identifier),
       ';',
+    ),
+
+    SEH_try_statement: $ => seq(
+      '__try',
+      field('body', $.compound_statement),
+      repeat1(choice($.__except_clause, $.__finally_statement))
+    ),
+
+    __except_clause: $ => seq(
+      '__except',
+      field('parameters', $.parameter_list),
+      field('body', $.compound_statement)
+    ),
+
+    __finally_statement: $ => seq(
+      '__finally',
+      field('body', $.compound_statement)
     ),
 
     // Expressions
