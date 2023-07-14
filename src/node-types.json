@@ -188,6 +188,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "SEH_try_statement",
+        "named": true
+      },
+      {
         "type": "attributed_statement",
         "named": true
       },
@@ -308,6 +312,32 @@
         "named": true
       }
     ]
+  },
+  {
+    "type": "SEH_try_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "compound_statement",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "parameter_list",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "abstract_array_declarator",
@@ -868,6 +898,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "SEH_try_statement",
+          "named": true
+        },
         {
           "type": "attributed_statement",
           "named": true
@@ -1640,6 +1674,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "SEH_try_statement",
+            "named": true
+          },
           {
             "type": "compound_statement",
             "named": true
@@ -3700,7 +3738,15 @@
     "named": false
   },
   {
+    "type": "__except",
+    "named": false
+  },
+  {
     "type": "__fastcall",
+    "named": false
+  },
+  {
+    "type": "__finally",
     "named": false
   },
   {
@@ -3713,6 +3759,10 @@
   },
   {
     "type": "__thiscall",
+    "named": false
+  },
+  {
+    "type": "__try",
     "named": false
   },
   {
