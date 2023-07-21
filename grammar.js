@@ -809,7 +809,7 @@ module.exports = grammar({
     seh_try_statement: $ => seq(
       '__try',
       field('body', $.compound_statement),
-      repeat1(choice($.seh_except_clause, $.seh_finally_clause,))
+      repeat1(choice($.seh_except_clause, $.seh_finally_clause)),
     ),
 
     seh_except_clause: $ => seq(
