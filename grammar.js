@@ -12,8 +12,8 @@
 
 const PREC = {
   PAREN_DECLARATOR: -10,
-  ASSIGNMENT: -1,
-  CONDITIONAL: -2,
+  ASSIGNMENT: -2,
+  CONDITIONAL: -1,
   DEFAULT: 0,
   LOGICAL_OR: 1,
   LOGICAL_AND: 2,
@@ -62,8 +62,8 @@ module.exports = grammar({
     [$._type_specifier, $._expression_not_binary],
     [$._type_specifier, $._expression_not_binary, $.macro_type_specifier],
     [$._type_specifier, $.macro_type_specifier],
-    [$._typedef_type_specifier, $.macro_type_specifier],
     [$.sized_type_specifier],
+    [$._type_specifier, $.sized_type_specifier],
     [$.attributed_statement],
     [$._declaration_modifiers, $.attributed_statement],
     [$.enum_specifier],
@@ -117,14 +117,14 @@ module.exports = grammar({
         $.identifier,
         alias($.preproc_call_expression, $.call_expression),
       )),
-      '\n',
+      token.immediate(/\r?\n/),
     ),
 
     preproc_def: $ => seq(
       preprocessor('define'),
       field('name', $.identifier),
       field('value', optional($.preproc_arg)),
-      '\n',
+      token.immediate(/\r?\n/),
     ),
 
     preproc_function_def: $ => seq(
@@ -132,7 +132,7 @@ module.exports = grammar({
       field('name', $.identifier),
       field('parameters', $.preproc_params),
       field('value', optional($.preproc_arg)),
-      '\n',
+      token.immediate(/\r?\n/),
     ),
 
     preproc_params: $ => seq(
@@ -142,13 +142,13 @@ module.exports = grammar({
     preproc_call: $ => seq(
       field('directive', $.preproc_directive),
       field('argument', optional($.preproc_arg)),
-      '\n',
+      token.immediate(/\r?\n/),
     ),
 
     ...preprocIf('', $ => $._block_item),
     ...preprocIf('_in_field_declaration_list', $ => $._field_declaration_list_item),
 
-    preproc_arg: _ => token(prec(-1, /\S(.|\\\r?\n)*/)),
+    preproc_arg: _ => token(prec(-1, /\S([^/\n]|\\\r?\n)*/)),
     preproc_directive: _ => /#[ \t]*[a-zA-Z0-9]\w*/,
 
     _preproc_expression: $ => choice(
@@ -242,7 +242,7 @@ module.exports = grammar({
     type_definition: $ => seq(
       'typedef',
       repeat($.type_qualifier),
-      field('type', $._typedef_type_specifier),
+      field('type', $._type_specifier),
       repeat($.type_qualifier),
       commaSep1(field('declarator', $._type_declarator)),
       ';',
@@ -358,6 +358,8 @@ module.exports = grammar({
       alias($.array_type_declarator, $.array_declarator),
       alias($.parenthesized_type_declarator, $.parenthesized_declarator),
       $._type_identifier,
+      alias(choice('signed', 'unsigned', 'long', 'short'), $.primitive_type),
+      $.primitive_type,
     ),
 
     _abstract_declarator: $ => choice(
@@ -508,16 +510,6 @@ module.exports = grammar({
       'noreturn',
     ),
 
-    _typedef_type_specifier: $ => choice(
-      $.struct_specifier,
-      $.union_specifier,
-      $.enum_specifier,
-      $.macro_type_specifier,
-      alias($._typedef_sized_type_specifier, $.sized_type_specifier),
-      $.primitive_type,
-      $._type_identifier,
-    ),
-
     _type_specifier: $ => choice(
       $.struct_specifier,
       $.union_specifier,
@@ -527,13 +519,6 @@ module.exports = grammar({
       $.primitive_type,
       $._type_identifier,
     ),
-
-    _typedef_sized_type_specifier: _ => repeat1(choice(
-      'signed',
-      'unsigned',
-      'long',
-      'short',
-    )),
 
     sized_type_specifier: $ => seq(
       repeat1(choice(
@@ -590,6 +575,7 @@ module.exports = grammar({
 
     struct_specifier: $ => prec.right(seq(
       'struct',
+      optional($.attribute_specifier),
       optional($.ms_declspec_modifier),
       choice(
         seq(
@@ -1191,7 +1177,10 @@ module.exports = grammar({
     identifier: _ =>
       /(\p{XID_Start}|_|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})(\p{XID_Continue}|\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})*/,
 
-    _type_identifier: $ => alias($.identifier, $.type_identifier),
+    _type_identifier: $ => alias(
+      $.identifier,
+      $.type_identifier,
+    ),
     _field_identifier: $ => alias($.identifier, $.field_identifier),
     _statement_identifier: $ => alias($.identifier, $.statement_identifier),
 
