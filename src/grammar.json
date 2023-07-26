@@ -166,8 +166,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "\n"
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
         }
       ]
     },
@@ -208,8 +211,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "\n"
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
         }
       ]
     },
@@ -258,8 +264,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "\n"
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
         }
       ]
     },
@@ -358,8 +367,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "\n"
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
         }
       ]
     },
@@ -1010,7 +1022,7 @@
         "value": -1,
         "content": {
           "type": "PATTERN",
-          "value": "\\S(.|\\\\\\r?\\n)*"
+          "value": "\\S([^/\\n]|\\\\\\r?\\n)*"
         }
       }
     },
@@ -1981,7 +1993,7 @@
           "name": "type",
           "content": {
             "type": "SYMBOL",
-            "name": "_typedef_type_specifier"
+            "name": "_type_specifier"
           }
         },
         {
@@ -2496,6 +2508,36 @@
         {
           "type": "SYMBOL",
           "name": "_type_identifier"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "signed"
+              },
+              {
+                "type": "STRING",
+                "value": "unsigned"
+              },
+              {
+                "type": "STRING",
+                "value": "long"
+              },
+              {
+                "type": "STRING",
+                "value": "short"
+              }
+            ]
+          },
+          "named": true,
+          "value": "primitive_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "primitive_type"
         }
       ]
     },
@@ -3328,44 +3370,6 @@
         }
       ]
     },
-    "_typedef_type_specifier": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "struct_specifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "union_specifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "enum_specifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "macro_type_specifier"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_typedef_sized_type_specifier"
-          },
-          "named": true,
-          "value": "sized_type_specifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "primitive_type"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_type_identifier"
-        }
-      ]
-    },
     "_type_specifier": {
       "type": "CHOICE",
       "members": [
@@ -3398,30 +3402,6 @@
           "name": "_type_identifier"
         }
       ]
-    },
-    "_typedef_sized_type_specifier": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "signed"
-          },
-          {
-            "type": "STRING",
-            "value": "unsigned"
-          },
-          {
-            "type": "STRING",
-            "value": "long"
-          },
-          {
-            "type": "STRING",
-            "value": "short"
-          }
-        ]
-      }
     },
     "sized_type_specifier": {
       "type": "SEQ",
@@ -3748,6 +3728,18 @@
           {
             "type": "STRING",
             "value": "struct"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "attribute_specifier"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           },
           {
             "type": "CHOICE",
@@ -5079,7 +5071,7 @@
     },
     "conditional_expression": {
       "type": "PREC_RIGHT",
-      "value": -2,
+      "value": -1,
       "content": {
         "type": "SEQ",
         "members": [
@@ -5157,7 +5149,7 @@
     },
     "assignment_expression": {
       "type": "PREC_RIGHT",
-      "value": -1,
+      "value": -2,
       "content": {
         "type": "SEQ",
         "members": [
@@ -7863,10 +7855,10 @@
       "macro_type_specifier"
     ],
     [
-      "_typedef_type_specifier",
-      "macro_type_specifier"
+      "sized_type_specifier"
     ],
     [
+      "_type_specifier",
       "sized_type_specifier"
     ],
     [
@@ -7904,8 +7896,8 @@
   ],
   "PREC": {
     "PAREN_DECLARATOR": -10,
-    "ASSIGNMENT": -1,
-    "CONDITIONAL": -2,
+    "ASSIGNMENT": -2,
+    "CONDITIONAL": -1,
     "DEFAULT": 0,
     "LOGICAL_OR": 1,
     "LOGICAL_AND": 2,
