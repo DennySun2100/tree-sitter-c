@@ -69,7 +69,7 @@ module.exports = grammar({
     [$.enum_specifier],
     [$._type_specifier, $.struct_declaration],
     [$._type_specifier, $.union_declaration],
-    [$._type_specifier, $.enum_declaration],   
+    [$._type_specifier, $.enum_declaration],
   ],
 
   word: $ => $.identifier,
