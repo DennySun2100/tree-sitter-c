@@ -67,6 +67,9 @@ module.exports = grammar({
     [$.attributed_statement],
     [$._declaration_modifiers, $.attributed_statement],
     [$.enum_specifier],
+    [$._type_specifier, $.struct_declaration],
+    [$._type_specifier, $.union_declaration],
+    [$._type_specifier, $.enum_declaration],   
   ],
 
   word: $ => $.identifier,
@@ -89,6 +92,9 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      $.struct_declaration,
+      $.union_declaration,
+      $.enum_declaration,
     ),
 
     _block_item: $ => choice(
@@ -105,6 +111,9 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      $.struct_declaration,
+      $.union_declaration,
+      $.enum_declaration,
     ),
 
     // Preprocesser
@@ -566,6 +575,11 @@ module.exports = grammar({
       optional($.attribute_specifier),
     ),
 
+    enum_declaration: $ => seq(
+      $.enum_specifier,
+      ';',
+    ),
+
     enumerator_list: $ => seq(
       '{',
       commaSep($.enumerator),
@@ -587,6 +601,11 @@ module.exports = grammar({
       optional($.attribute_specifier),
     )),
 
+    struct_declaration: $ => prec.right(seq(
+      $.struct_specifier,
+      ';',
+    )),
+
     union_specifier: $ => prec.right(seq(
       'union',
       optional($.ms_declspec_modifier),
@@ -598,6 +617,11 @@ module.exports = grammar({
         field('body', $.field_declaration_list),
       ),
       optional($.attribute_specifier),
+    )),
+
+    union_declaration: $ => prec.right(seq(
+      $.union_specifier,
+      ';',
     )),
 
     field_declaration_list: $ => seq(

@@ -1077,6 +1077,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         },
@@ -1109,7 +1113,15 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         }
       ]
@@ -1252,6 +1264,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         },
@@ -1284,7 +1300,15 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         }
       ]
@@ -1326,6 +1350,21 @@
       "types": [
         {
           "type": "_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "enum_specifier",
           "named": true
         }
       ]
@@ -2646,6 +2685,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "field_declaration",
           "named": true
         },
@@ -2682,7 +2725,15 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         }
       ]
@@ -2734,6 +2785,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         },
@@ -2766,7 +2821,15 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         }
       ]
@@ -2790,6 +2853,10 @@
         },
         {
           "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
           "named": true
         },
         {
@@ -2829,7 +2896,15 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         }
       ]
@@ -2945,6 +3020,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "field_declaration",
           "named": true
         },
@@ -2981,7 +3060,15 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         }
       ]
@@ -3037,6 +3124,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "field_declaration",
           "named": true
         },
@@ -3073,7 +3164,15 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         }
       ]
@@ -3289,6 +3388,21 @@
     }
   },
   {
+    "type": "struct_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "struct_specifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "struct_specifier",
     "named": true,
     "fields": {
@@ -3436,6 +3550,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "expression_statement",
           "named": true
         },
@@ -3492,11 +3610,19 @@
           "named": true
         },
         {
+          "type": "struct_declaration",
+          "named": true
+        },
+        {
           "type": "switch_statement",
           "named": true
         },
         {
           "type": "type_definition",
+          "named": true
+        },
+        {
+          "type": "union_declaration",
           "named": true
         },
         {
@@ -3623,6 +3749,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "union_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "union_specifier",
+          "named": true
+        }
+      ]
     }
   },
   {
