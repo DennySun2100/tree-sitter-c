@@ -230,7 +230,6 @@ module.exports = grammar({
     // Main Grammar
 
     function_definition: $ => seq(
-      optional($.ms_call_modifier),
       $._declaration_specifiers,
       field('declarator', $._declarator),
       field('body', choice($.compound_statement, $.seh_try_statement)),
@@ -260,6 +259,7 @@ module.exports = grammar({
       $.attribute_specifier,
       $.attribute_declaration,
       $.ms_declspec_modifier,
+      $.ms_call_modifier,
     ),
 
     _declaration_specifiers: $ => prec.right(seq(

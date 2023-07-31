@@ -1892,18 +1892,6 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "ms_call_modifier"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
           "type": "SYMBOL",
           "name": "_declaration_specifiers"
         },
@@ -2122,6 +2110,10 @@
         {
           "type": "SYMBOL",
           "name": "ms_declspec_modifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ms_call_modifier"
         }
       ]
     },
