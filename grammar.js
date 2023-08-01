@@ -232,7 +232,7 @@ module.exports = grammar({
     function_definition: $ => seq(
       $._declaration_specifiers,
       field('declarator', $._declarator),
-      field('body', choice($.compound_statement, $.seh_try_statement)),
+      field('body', $.compound_statement),
     ),
 
     declaration: $ => seq(

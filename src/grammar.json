@@ -1907,17 +1907,8 @@
           "type": "FIELD",
           "name": "body",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "compound_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "seh_try_statement"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "compound_statement"
           }
         }
       ]

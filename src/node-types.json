@@ -1751,10 +1751,6 @@
           {
             "type": "compound_statement",
             "named": true
-          },
-          {
-            "type": "seh_try_statement",
-            "named": true
           }
         ]
       },
