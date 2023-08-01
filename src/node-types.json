@@ -1451,6 +1451,21 @@
     }
   },
   {
+    "type": "enumerator_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "enumerator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "enumerator_list",
     "named": true,
     "fields": {},
@@ -1460,6 +1475,10 @@
       "types": [
         {
           "type": "enumerator",
+          "named": true
+        },
+        {
+          "type": "enumerator_declaration",
           "named": true
         }
       ]

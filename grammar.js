@@ -580,8 +580,8 @@ module.exports = grammar({
 
     enumerator_list: $ => seq(
       '{',
-      commaSep($.enumerator),
-      optional(','),
+      repeat($.enumerator_declaration),
+      optional($.enumerator),
       '}',
     ),
 
@@ -652,6 +652,11 @@ module.exports = grammar({
     enumerator: $ => seq(
       field('name', $.identifier),
       optional(seq('=', field('value', $._expression))),
+    ),
+
+    enumerator_declaration: $ => seq(
+      $.enumerator,
+      ',',
     ),
 
     variadic_parameter: _ => seq(
