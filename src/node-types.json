@@ -2539,6 +2539,10 @@
           "named": true
         },
         {
+          "type": "ms_call_modifier",
+          "named": true
+        },
+        {
           "type": "ms_pointer_modifier",
           "named": true
         },
