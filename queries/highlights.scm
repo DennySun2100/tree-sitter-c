@@ -9,7 +9,7 @@
 "extern" @keyword
 "for" @keyword
 "if" @keyword
-"inline" @keyword
+"__inline" @keyword
 "return" @keyword
 "sizeof" @keyword
 "static" @keyword
