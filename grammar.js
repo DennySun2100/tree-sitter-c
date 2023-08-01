@@ -300,7 +300,7 @@ module.exports = grammar({
     ms_declspec_modifier: $ => seq(
       '__declspec',
       '(',
-      $.identifier,
+      seq($.identifier, optional($.argument_list)),
       ')',
     ),
 
