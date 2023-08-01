@@ -38,7 +38,7 @@ module.exports = grammar({
   name: 'c',
 
   extras: $ => [
-    /\s|\\\r?\n/,
+    /\s|\\\r?\n|\f/,
     $.comment,
   ],
 
@@ -504,7 +504,7 @@ module.exports = grammar({
       'static',
       'auto',
       'register',
-      'inline',
+      alias('inline', '__inline'),
       'thread_local',
       '__thread',
     ),
@@ -1036,7 +1036,7 @@ module.exports = grammar({
 
     gnu_asm_qualifier: _ => choice(
       'volatile',
-      'inline',
+      alias('inline', '__inline'),
       'goto',
     ),
 

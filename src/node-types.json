@@ -4199,6 +4199,10 @@
     "named": false
   },
   {
+    "type": "__inline",
+    "named": false
+  },
+  {
     "type": "__leave",
     "named": false
   },
@@ -4320,10 +4324,6 @@
   },
   {
     "type": "if",
-    "named": false
-  },
-  {
-    "type": "inline",
     "named": false
   },
   {
