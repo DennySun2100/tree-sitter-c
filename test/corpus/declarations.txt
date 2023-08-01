@@ -102,26 +102,30 @@ enum e4: int {
     (enum_specifier
       name: (type_identifier)
       body: (enumerator_list
-        (enumerator
-          name: (identifier))
-        (enumerator
-          name: (identifier)
-          value: (number_literal))
+        (enumerator_declaration
+          (enumerator
+            name: (identifier)))
+        (enumerator_declaration
+          (enumerator
+            name: (identifier)
+            value: (number_literal)))
         (enumerator
           name: (identifier)))))
   (enum_declaration
     (enum_specifier
       name: (type_identifier)
       body: (enumerator_list
-        (enumerator
-          name: (identifier)))))
+        (enumerator_declaration
+          (enumerator
+            name: (identifier))))))
   (enum_declaration
     (enum_specifier
       name: (type_identifier)
       underlying_type: (primitive_type)
       body: (enumerator_list
-        (enumerator
-          name: (identifier))))))
+        (enumerator_declaration
+          (enumerator
+            name: (identifier)))))))
 
 ================================================================================
 Struct declarations containing preprocessor directives
@@ -259,8 +263,9 @@ enum { g, h } i;
   (declaration
     type: (enum_specifier
       body: (enumerator_list
-        (enumerator
-          name: (identifier))
+        (enumerator_declaration
+          (enumerator
+            name: (identifier)))
         (enumerator
           name: (identifier))))
     declarator: (identifier)))
