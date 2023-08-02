@@ -4235,6 +4235,10 @@
     "named": false
   },
   {
+    "type": "__volatile",
+    "named": false
+  },
+  {
     "type": "_unaligned",
     "named": false
   },
@@ -4324,6 +4328,10 @@
   },
   {
     "type": "if",
+    "named": false
+  },
+  {
+    "type": "inline",
     "named": false
   },
   {

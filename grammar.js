@@ -504,7 +504,8 @@ module.exports = grammar({
       'static',
       'auto',
       'register',
-      alias('inline', '__inline'),
+      'inline', 
+      '__inline',
       'thread_local',
       '__thread',
     ),
@@ -513,6 +514,7 @@ module.exports = grammar({
       'const',
       'constexpr',
       'volatile',
+      '__volatile',
       'restrict',
       '__restrict__',
       '_Atomic',
@@ -1036,7 +1038,9 @@ module.exports = grammar({
 
     gnu_asm_qualifier: _ => choice(
       'volatile',
-      alias('inline', '__inline'),
+      '__volatile',
+      'inline', 
+      '__inline',
       'goto',
     ),
 

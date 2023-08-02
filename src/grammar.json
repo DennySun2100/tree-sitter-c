@@ -3418,12 +3418,11 @@
           "value": "register"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": "inline"
-          },
-          "named": false,
+          "type": "STRING",
+          "value": "inline"
+        },
+        {
+          "type": "STRING",
           "value": "__inline"
         },
         {
@@ -3450,6 +3449,10 @@
         {
           "type": "STRING",
           "value": "volatile"
+        },
+        {
+          "type": "STRING",
+          "value": "__volatile"
         },
         {
           "type": "STRING",
@@ -6554,12 +6557,15 @@
           "value": "volatile"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": "inline"
-          },
-          "named": false,
+          "type": "STRING",
+          "value": "__volatile"
+        },
+        {
+          "type": "STRING",
+          "value": "inline"
+        },
+        {
+          "type": "STRING",
           "value": "__inline"
         },
         {
