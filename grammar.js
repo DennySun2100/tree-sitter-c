@@ -504,7 +504,7 @@ module.exports = grammar({
       'static',
       'auto',
       'register',
-      'inline', 
+      'inline',
       '__inline',
       'thread_local',
       '__thread',
@@ -1039,7 +1039,7 @@ module.exports = grammar({
     gnu_asm_qualifier: _ => choice(
       'volatile',
       '__volatile',
-      'inline', 
+      'inline',
       '__inline',
       'goto',
     ),
