@@ -2100,10 +2100,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "ms_declspec_modifier"
-        },
-        {
-          "type": "SYMBOL",
           "name": "ms_call_modifier"
         }
       ]
@@ -3473,6 +3469,10 @@
         {
           "type": "STRING",
           "value": "noreturn"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ms_declspec_modifier"
         }
       ]
     },
@@ -3771,8 +3771,12 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "enum_specifier"
+          "type": "FIELD",
+          "name": "declarator",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enum_specifier"
+          }
         },
         {
           "type": "STRING",
@@ -3910,8 +3914,12 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "struct_specifier"
+            "type": "FIELD",
+            "name": "declarator",
+            "content": {
+              "type": "SYMBOL",
+              "name": "struct_specifier"
+            }
           },
           {
             "type": "STRING",
@@ -4006,8 +4014,12 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "union_specifier"
+            "type": "FIELD",
+            "name": "declarator",
+            "content": {
+              "type": "SYMBOL",
+              "name": "union_specifier"
+            }
           },
           {
             "type": "STRING",
@@ -4230,8 +4242,12 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "enumerator"
+          "type": "FIELD",
+          "name": "declarator",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enumerator"
+          }
         },
         {
           "type": "STRING",
@@ -8017,6 +8033,10 @@
     [
       "_type_specifier",
       "enum_declaration"
+    ],
+    [
+      "_declaration_modifiers",
+      "type_qualifier"
     ]
   ],
   "precedences": [],

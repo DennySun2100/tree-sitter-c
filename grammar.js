@@ -67,6 +67,7 @@ module.exports = grammar({
     [$._type_specifier, $.struct_declaration],
     [$._type_specifier, $.union_declaration],
     [$._type_specifier, $.enum_declaration],
+    [$._declaration_modifiers, $.type_qualifier],
   ],
 
   word: $ => $.identifier,
@@ -258,7 +259,6 @@ module.exports = grammar({
       $.type_qualifier,
       $.attribute_specifier,
       $.attribute_declaration,
-      $.ms_declspec_modifier,
       $.ms_call_modifier,
     ),
 
@@ -510,7 +510,7 @@ module.exports = grammar({
       '__thread',
     ),
 
-    type_qualifier: _ => choice(
+    type_qualifier: $ => choice(
       'const',
       'constexpr',
       'volatile',
@@ -520,6 +520,7 @@ module.exports = grammar({
       '_Atomic',
       '_Noreturn',
       'noreturn',
+      $.ms_declspec_modifier,
     ),
 
     _type_specifier: $ => choice(
@@ -579,7 +580,7 @@ module.exports = grammar({
     ),
 
     enum_declaration: $ => seq(
-      $.enum_specifier,
+      field('declarator', $.enum_specifier),
       ';',
     ),
 
@@ -605,7 +606,7 @@ module.exports = grammar({
     )),
 
     struct_declaration: $ => prec.right(seq(
-      $.struct_specifier,
+      field('declarator', $.struct_specifier),
       ';',
     )),
 
@@ -623,7 +624,7 @@ module.exports = grammar({
     )),
 
     union_declaration: $ => prec.right(seq(
-      $.union_specifier,
+      field('declarator', $.union_specifier),
       ';',
     )),
 
@@ -660,7 +661,7 @@ module.exports = grammar({
     ),
 
     enumerator_declaration: $ => seq(
-      $.enumerator,
+      field('declarator', $.enumerator),
       ',',
     ),
 

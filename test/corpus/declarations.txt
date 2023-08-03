@@ -17,10 +17,10 @@ struct s3 {
 
 (translation_unit
   (struct_declaration
-    (struct_specifier
+    declarator: (struct_specifier
       name: (type_identifier)))
   (struct_declaration
-    (struct_specifier
+    declarator: (struct_specifier
       name: (type_identifier)
       body: (field_declaration_list
         (field_declaration
@@ -32,7 +32,7 @@ struct s3 {
           (bitfield_clause
             (number_literal))))))
   (struct_declaration
-    (struct_specifier
+    declarator: (struct_specifier
       name: (type_identifier)
       body: (field_declaration_list
         (field_declaration
@@ -59,10 +59,10 @@ union s2 {
 
 (translation_unit
   (union_declaration
-    (union_specifier
+    declarator: (union_specifier
       name: (type_identifier)))
   (union_declaration
-    (union_specifier
+    declarator: (union_specifier
       name: (type_identifier)
       body: (field_declaration_list
         (field_declaration
@@ -96,35 +96,35 @@ enum e4: int {
 
 (translation_unit
   (enum_declaration
-    (enum_specifier
+    declarator: (enum_specifier
       name: (type_identifier)))
   (enum_declaration
-    (enum_specifier
+    declarator: (enum_specifier
       name: (type_identifier)
       body: (enumerator_list
         (enumerator_declaration
-          (enumerator
+          declarator: (enumerator
             name: (identifier)))
         (enumerator_declaration
-          (enumerator
+          declarator: (enumerator
             name: (identifier)
             value: (number_literal)))
         (enumerator
           name: (identifier)))))
   (enum_declaration
-    (enum_specifier
+    declarator: (enum_specifier
       name: (type_identifier)
       body: (enumerator_list
         (enumerator_declaration
-          (enumerator
+          declarator: (enumerator
             name: (identifier))))))
   (enum_declaration
-    (enum_specifier
+    declarator: (enum_specifier
       name: (type_identifier)
       underlying_type: (primitive_type)
       body: (enumerator_list
         (enumerator_declaration
-          (enumerator
+          declarator: (enumerator
             name: (identifier)))))))
 
 ================================================================================
@@ -141,20 +141,20 @@ struct s {
 
 (translation_unit
   (struct_declaration
-    (struct_specifier
-      (type_identifier)
-      (field_declaration_list
+    declarator: (struct_specifier
+      name: (type_identifier)
+      body: (field_declaration_list
         (preproc_def
-          (identifier)
-          (preproc_arg))
+          name: (identifier)
+          value: (preproc_arg))
         (field_declaration
-          (primitive_type)
-          (array_declarator
-            (field_identifier)
-            (identifier)))
+          type: (primitive_type)
+          declarator: (array_declarator
+            declarator: (field_identifier)
+            size: (identifier)))
         (preproc_call
-          (preproc_directive)
-          (preproc_arg))))))
+          directive: (preproc_directive)
+          argument: (preproc_arg))))))
 
 ================================================================================
 Primitive-typed variable declarations
@@ -264,7 +264,7 @@ enum { g, h } i;
     type: (enum_specifier
       body: (enumerator_list
         (enumerator_declaration
-          (enumerator
+          declarator: (enumerator
             name: (identifier)))
         (enumerator
           name: (identifier))))
@@ -667,7 +667,7 @@ int main() {
           (identifier))))))
 
 ================================================================================
-Attributes
+Attributes1
 ================================================================================
 
 extern __attribute__((visibility("hidden"))) int foo();
@@ -677,6 +677,90 @@ void die(const char *format, ...) __attribute__((noreturn))
 extern __attribute__((visibility("default"), weak)) int print_status();
 
 int f([[a::b(c), d]] int x) {}
+
+--------------------------------------------------------------------------------
+    (translation_unit
+      (declaration
+        (storage_class_specifier)
+        (attribute_specifier
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (string_literal
+                  (string_content))))))
+        (primitive_type)
+        (function_declarator
+          (identifier)
+          (parameter_list)))
+      (declaration
+        (storage_class_specifier)
+        (primitive_type)
+        (function_declarator
+          (identifier)
+          (parameter_list)
+          (attribute_specifier
+            (argument_list
+              (identifier)))))
+      (declaration
+        (primitive_type)
+        (function_declarator
+          (identifier)
+          (parameter_list
+            (parameter_declaration
+              (type_qualifier)
+              (primitive_type)
+              (pointer_declarator
+                (identifier)))
+            (variadic_parameter))
+          (attribute_specifier
+            (argument_list
+              (identifier)))
+          (attribute_specifier
+            (argument_list
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)
+                  (number_literal)
+                  (number_literal)))))))
+      (declaration
+        (storage_class_specifier)
+        (attribute_specifier
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (string_literal
+                  (string_content))))
+            (identifier)))
+        (primitive_type)
+        (function_declarator
+          (identifier)
+          (parameter_list)))
+      (function_definition
+        (primitive_type)
+        (function_declarator
+          (identifier)
+          (parameter_list
+            (parameter_declaration
+              (attribute_declaration
+                (attribute
+                  (identifier)
+                  (identifier)
+                  (argument_list
+                    (identifier)))
+                (attribute
+                  (identifier)))
+              (primitive_type)
+              (identifier))))
+        (compound_statement)))
+
+
+================================================================================
+Attributes2
+================================================================================
+
 
 [[gnu::always_inline]] [[gnu::hot]] [[gnu::const]] [[nodiscard]]
 int g(void);
@@ -690,6 +774,86 @@ void f[[gnu::always_inline]]();
 [[nodiscard("reason")]] int foo;
 
 [[fallthrough]];
+
+--------------------------------------------------------------------------------
+    (translation_unit
+      (declaration
+        (attribute_declaration
+          (attribute
+            (identifier)
+            (identifier)))
+        (attribute_declaration
+          (attribute
+            (identifier)
+            (identifier)))
+        (attribute_declaration
+          (attribute
+            (identifier)
+            (identifier)))
+        (attribute_declaration
+          (attribute
+            (identifier)))
+        (primitive_type)
+        (function_declarator
+          (identifier)
+          (parameter_list
+            (parameter_declaration
+              (primitive_type)))))
+      (declaration
+        (attribute_declaration
+          (attribute
+            (identifier)
+            (identifier))
+          (attribute
+            (identifier)
+            (identifier))
+          (attribute
+            (identifier)
+            (identifier))
+          (attribute
+            (identifier)))
+        (primitive_type)
+        (function_declarator
+          (identifier)
+          (parameter_list
+            (parameter_declaration
+              (primitive_type)))))
+      (declaration
+        (primitive_type)
+        (attributed_declarator
+          (identifier)
+          (attribute_declaration
+            (attribute
+              (identifier)))))
+      (declaration
+        (primitive_type)
+        (function_declarator
+          (attributed_declarator
+            (identifier)
+            (attribute_declaration
+              (attribute
+                (identifier)
+                (identifier))))
+          (parameter_list)))
+      (declaration
+        (attribute_declaration
+          (attribute
+            (identifier)
+            (argument_list
+              (string_literal
+                (string_content)))))
+        (primitive_type)
+        (identifier))
+      (attributed_statement
+        (attribute_declaration
+          (attribute
+            (identifier)))
+        (expression_statement)))
+
+================================================================================
+Attributes3
+================================================================================
+
 
 struct S {
   int a [[deprecated]];
@@ -715,229 +879,84 @@ struct __attribute__((__packed__)) foo_t {
 
 --------------------------------------------------------------------------------
 
-(translation_unit
-  (declaration
-    (storage_class_specifier)
-    (attribute_specifier
-      (argument_list
-        (call_expression
-          (identifier)
-          (argument_list
-            (string_literal
-              (string_content))))))
-    (primitive_type)
-    (function_declarator
-      (identifier)
-      (parameter_list)))
-  (declaration
-    (storage_class_specifier)
-    (primitive_type)
-    (function_declarator
-      (identifier)
-      (parameter_list)
-      (attribute_specifier
-        (argument_list
-          (identifier)))))
-  (declaration
-    (primitive_type)
-    (function_declarator
-      (identifier)
-      (parameter_list
-        (parameter_declaration
-          (type_qualifier)
-          (primitive_type)
-          (pointer_declarator
-            (identifier)))
-        (variadic_parameter))
-      (attribute_specifier
-        (argument_list
-          (identifier)))
-      (attribute_specifier
-        (argument_list
-          (call_expression
-            (identifier)
-            (argument_list
-              (identifier)
-              (number_literal)
-              (number_literal)))))))
-  (declaration
-    (storage_class_specifier)
-    (attribute_specifier
-      (argument_list
-        (call_expression
-          (identifier)
-          (argument_list
-            (string_literal
-              (string_content))))
-        (identifier)))
-    (primitive_type)
-    (function_declarator
-      (identifier)
-      (parameter_list)))
-  (function_definition
-    (primitive_type)
-    (function_declarator
-      (identifier)
-      (parameter_list
-        (parameter_declaration
+    (translation_unit
+
+      (struct_declaration
+        (struct_specifier
+          (type_identifier)
+          (field_declaration_list
+            (field_declaration
+              (primitive_type)
+              (attributed_declarator
+                (field_identifier)
+                (attribute_declaration
+                  (attribute
+                    (identifier))))))))
+      (type_definition
+        (primitive_type)
+        (attributed_declarator
+          (type_identifier)
           (attribute_declaration
             (attribute
-              (identifier)
-              (identifier)
-              (argument_list
-                (identifier)))
-            (attribute
+              (identifier)))))
+      (struct_declaration
+        (struct_specifier
+          (type_identifier)
+          (field_declaration_list
+            (field_declaration
+              (primitive_type)
+              (field_identifier)
+              (attribute_specifier
+                (argument_list
+                  (call_expression
+                    (identifier)
+                    (argument_list
+                      (number_literal)))))))
+          (attribute_specifier
+            (argument_list
+              (call_expression
+                (identifier)
+                (argument_list
+                  (number_literal)))))))
+
+      (union_declaration
+        (union_specifier
+          (type_identifier)
+          (field_declaration_list
+            (field_declaration
+              (primitive_type)
+              (field_identifier)
+              (attribute_specifier
+                (argument_list
+                  (call_expression
+                    (identifier)
+                    (argument_list
+                      (number_literal)))))))
+          (attribute_specifier
+            (argument_list
+              (call_expression
+                (identifier)
+                (argument_list
+                  (number_literal)))))))
+      (enum_declaration
+        (enum_specifier
+          (type_identifier)
+          (enumerator_list
+            (enumerator
               (identifier)))
-          (primitive_type)
-          (identifier))))
-    (compound_statement))
-  (declaration
-    (attribute_declaration
-      (attribute
-        (identifier)
-        (identifier)))
-    (attribute_declaration
-      (attribute
-        (identifier)
-        (identifier)))
-    (attribute_declaration
-      (attribute
-        (identifier)
-        (identifier)))
-    (attribute_declaration
-      (attribute
-        (identifier)))
-    (primitive_type)
-    (function_declarator
-      (identifier)
-      (parameter_list
-        (parameter_declaration
-          (primitive_type)))))
-  (declaration
-    (attribute_declaration
-      (attribute
-        (identifier)
-        (identifier))
-      (attribute
-        (identifier)
-        (identifier))
-      (attribute
-        (identifier)
-        (identifier))
-      (attribute
-        (identifier)))
-    (primitive_type)
-    (function_declarator
-      (identifier)
-      (parameter_list
-        (parameter_declaration
-          (primitive_type)))))
-  (declaration
-    (primitive_type)
-    (attributed_declarator
-      (identifier)
-      (attribute_declaration
-        (attribute
-          (identifier)))))
-  (declaration
-    (primitive_type)
-    (function_declarator
-      (attributed_declarator
-        (identifier)
-        (attribute_declaration
-          (attribute
-            (identifier)
-            (identifier))))
-      (parameter_list)))
-  (declaration
-    (attribute_declaration
-      (attribute
-        (identifier)
-        (argument_list
-          (string_literal
-            (string_content)))))
-    (primitive_type)
-    (identifier))
-  (attributed_statement
-    (attribute_declaration
-      (attribute
-        (identifier)))
-    (expression_statement))
-  (struct_declaration
-    (struct_specifier
-      (type_identifier)
-      (field_declaration_list
-        (field_declaration
-          (primitive_type)
-          (attributed_declarator
-            (field_identifier)
-            (attribute_declaration
-              (attribute
-                (identifier))))))))
-  (type_definition
-    (primitive_type)
-    (attributed_declarator
-      (type_identifier)
-      (attribute_declaration
-        (attribute
-          (identifier)))))
-  (struct_declaration
-    (struct_specifier
-      (type_identifier)
-      (field_declaration_list
-        (field_declaration
-          (primitive_type)
-          (field_identifier)
           (attribute_specifier
             (argument_list
               (call_expression
                 (identifier)
                 (argument_list
                   (number_literal)))))))
-      (attribute_specifier
-        (argument_list
-          (call_expression
-            (identifier)
-            (argument_list
-              (number_literal)))))))
-  (union_declaration
-    (union_specifier
-      (type_identifier)
-      (field_declaration_list
-        (field_declaration
-          (primitive_type)
-          (field_identifier)
+      (struct_declaration
+        (struct_specifier
           (attribute_specifier
             (argument_list
-              (call_expression
-                (identifier)
-                (argument_list
-                  (number_literal)))))))
-      (attribute_specifier
-        (argument_list
-          (call_expression
-            (identifier)
-            (argument_list
-              (number_literal)))))))
-  (enum_declaration
-    (enum_specifier
-      (type_identifier)
-      (enumerator_list
-        (enumerator
-          (identifier)))
-      (attribute_specifier
-        (argument_list
-          (call_expression
-            (identifier)
-            (argument_list
-              (number_literal)))))))
-  (struct_declaration
-    (struct_specifier
-      (attribute_specifier
-        (argument_list
-          (identifier)))
-      (type_identifier)
-      (field_declaration_list
-        (field_declaration
-          (primitive_type)
-          (field_identifier))))))
+              (identifier)))
+          (type_identifier)
+          (field_declaration_list
+            (field_declaration
+              (primitive_type)
+              (field_identifier))))))
