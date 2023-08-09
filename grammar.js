@@ -389,6 +389,7 @@ module.exports = grammar({
     )),
     parenthesized_type_declarator: $ => prec.dynamic(PREC.PAREN_DECLARATOR, seq(
       '(',
+      optional($.ms_declspec_modifier),
       $._type_declarator,
       ')',
     )),

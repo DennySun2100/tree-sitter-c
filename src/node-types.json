@@ -2476,7 +2476,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -2489,6 +2489,10 @@
         },
         {
           "type": "_type_declarator",
+          "named": true
+        },
+        {
+          "type": "ms_declspec_modifier",
           "named": true
         }
       ]
