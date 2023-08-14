@@ -68,6 +68,9 @@ module.exports = grammar({
     [$._type_specifier, $.union_declaration],
     [$._type_specifier, $.enum_declaration],
     [$._declaration_modifiers, $.type_qualifier],
+    [$._type_specifier, $._old_style_parameter_list],
+    [$.parameter_list, $._old_style_parameter_list],
+    [$._old_style_function_definition, $._declaration_modifiers],
   ],
 
   word: $ => $.identifier,
@@ -78,6 +81,7 @@ module.exports = grammar({
     // Top level items are block items with the exception of the expression statement
     _top_level_item: $ => choice(
       $.function_definition,
+      alias($._old_style_function_definition, $.function_definition),
       $.linkage_specification,
       $.declaration,
       $._top_level_statement,
@@ -97,6 +101,7 @@ module.exports = grammar({
 
     _block_item: $ => choice(
       $.function_definition,
+      alias($._old_style_function_definition, $.function_definition),
       $.linkage_specification,
       $.declaration,
       $._statement,
@@ -236,25 +241,34 @@ module.exports = grammar({
       field('body', $.compound_statement),
     ),
 
+    _old_style_function_definition: $ => seq(
+      optional($.ms_call_modifier),
+      $._declaration_specifiers,
+      field('declarator', alias($._old_style_function_declarator, $.function_declarator)),
+      repeat($.declaration),
+      field('body', $.compound_statement),
+    ),
+
     declaration: $ => seq(
       $._declaration_specifiers,
-      commaSep1(field('declarator', choice(
-        seq($._declarator, optional($.gnu_asm_expression)),
-        $.init_declarator,
-      ))),
+      $._declaration_declarator,
       ';',
     ),
+    _declaration_declarator: $ => commaSep1(field('declarator', choice(
+      seq($._declarator, optional($.gnu_asm_expression)),
+      $.init_declarator,
+    ))),
 
     type_definition: $ => seq(
       optional('__extension__'),
       'typedef',
-      repeat($.type_qualifier),
-      field('type', $._type_specifier),
-      repeat($.type_qualifier),
-      commaSep1(field('declarator', $._type_declarator)),
+      $._type_definition_type,
+      $._type_definition_declarators,
       repeat($.attribute_specifier),
       ';',
     ),
+    _type_definition_type: $ => seq(repeat($.type_qualifier), field('type', $._type_specifier), repeat($.type_qualifier)),
+    _type_definition_declarators: $ => commaSep1(field('declarator', $._type_declarator)),
 
     _declaration_modifiers: $ => choice(
       $.storage_class_specifier,
@@ -462,6 +476,11 @@ module.exports = grammar({
       field('parameters', $.parameter_list),
     )),
 
+    _old_style_function_declarator: $ => seq(
+      field('declarator', $._declarator),
+      field('parameters', alias($._old_style_parameter_list, $.parameter_list)),
+    ),
+
     array_declarator: $ => prec(1, seq(
       field('declarator', $._declarator),
       '[',
@@ -652,13 +671,14 @@ module.exports = grammar({
 
     field_declaration: $ => seq(
       $._declaration_specifiers,
-      commaSep(seq(
-        field('declarator', $._field_declarator),
-        optional($.bitfield_clause),
-      )),
+      optional($._field_declaration_declarator),
       optional($.attribute_specifier),
       ';',
     ),
+    _field_declaration_declarator: $ => commaSep1(seq(
+      field('declarator', $._field_declarator),
+      optional($.bitfield_clause),
+    )),
 
     bitfield_clause: $ => seq(':', $._expression),
 
@@ -679,6 +699,11 @@ module.exports = grammar({
     parameter_list: $ => seq(
       '(',
       commaSep(choice($.parameter_declaration, $.variadic_parameter)),
+      ')',
+    ),
+    _old_style_parameter_list: $ => seq(
+      '(',
+      commaSep(choice($.identifier, $.variadic_parameter)),
       ')',
     ),
 
@@ -802,14 +827,18 @@ module.exports = grammar({
     for_statement: $ => seq(
       'for',
       '(',
+      $._for_statement_body,
+      ')',
+      field('body', $._statement),
+    ),
+    _for_statement_body: $ => seq(
       choice(
         field('initializer', $.declaration),
         seq(field('initializer', optional(choice($._expression, $.comma_expression))), ';'),
       ),
-      field('condition', optional(choice($._expression, $.comma_expression))), ';',
+      field('condition', optional(choice($._expression, $.comma_expression))),
+      ';',
       field('update', optional(choice($._expression, $.comma_expression))),
-      ')',
-      field('body', $._statement),
     ),
 
     return_statement: $ => seq(
@@ -1155,13 +1184,13 @@ module.exports = grammar({
       const decimalDigits = seq(repeat1(decimal), repeat(seq(separator, repeat1(decimal))));
       return token(seq(
         optional(/[-\+]/),
-        optional(choice('0x', '0b')),
+        optional(choice(/0[xX]/, /0[bB]/)),
         choice(
           seq(
             choice(
               decimalDigits,
-              seq('0b', decimalDigits),
-              seq('0x', hexDigits),
+              seq(/0[bB]/, decimalDigits),
+              seq(/0[xX]/, hexDigits),
             ),
             optional(seq('.', optional(hexDigits))),
           ),
@@ -1174,7 +1203,7 @@ module.exports = grammar({
             hexDigits,
           )),
         )),
-        repeat(choice('u', 'l', 'U', 'L', 'f', 'F')),
+        /[uUlLwWfFbBdD]*/,
       ));
     },
 

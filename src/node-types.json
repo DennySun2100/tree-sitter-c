@@ -1825,6 +1825,10 @@
           "named": true
         },
         {
+          "type": "declaration",
+          "named": true
+        },
+        {
           "type": "ms_call_modifier",
           "named": true
         },
@@ -2460,6 +2464,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
         {
           "type": "parameter_declaration",
           "named": true
