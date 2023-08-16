@@ -8299,7 +8299,7 @@
   "extras": [
     {
       "type": "PATTERN",
-      "value": "\\s|\\\\\\r?\\n|\\f"
+      "value": "\\s|\\\\\\r?\\n|\\f|\\v|\\x08"
     },
     {
       "type": "SYMBOL",
