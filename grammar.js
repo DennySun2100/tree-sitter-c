@@ -38,8 +38,9 @@ module.exports = grammar({
   name: 'c',
 
   extras: $ => [
-    /\s|\\\r?\n|\f|\v|\x08/,
+    /\s|\\\r?\n|\f/,
     $.comment,
+    $.hidden,
   ],
 
   inline: $ => [
@@ -1282,6 +1283,13 @@ module.exports = grammar({
         /[^*]*\*+([^/*][^*]*\*+)*/,
         '/',
       ),
+    )),
+
+    // \b...\v sequence for hidding text parsed output.
+    hidden: _ => token(seq(
+      '\x08',
+      /[^\v]*/,
+      '\v',
     )),
   },
 
