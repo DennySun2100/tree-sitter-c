@@ -1227,7 +1227,8 @@ module.exports = grammar({
       choice('L"', 'u"', 'U"', 'u8"', '"'),
       repeat(choice(
         alias(token.immediate(prec(1, /[^\\"\n]+/)), $.string_content),
-        $.escape_sequence,
+        seq($.escape_sequence,
+          repeat('\n')),
       )),
       '"',
     ),
