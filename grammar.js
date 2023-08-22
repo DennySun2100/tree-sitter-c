@@ -1210,10 +1210,10 @@ module.exports = grammar({
 
     char_literal: $ => seq(
       choice('L\'', 'u\'', 'U\'', 'u8\'', '\''),
-      choice(
+      repeat(choice(
         $.escape_sequence,
         alias(token.immediate(/[^\n']/), $.character),
-      ),
+      )),
       '\'',
     ),
 
