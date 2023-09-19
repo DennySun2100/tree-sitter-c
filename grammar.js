@@ -1346,7 +1346,7 @@ function preprocIf(suffix, content) {
       preprocessor('if'),
       field('condition', $._preproc_expression),
       '\n',
-      repeat(content($)),
+      //repeat(content($)),
       //field('alternative', optional(elseBlock($))),
       //preprocessor('endif'),
     ),
@@ -1354,28 +1354,28 @@ function preprocIf(suffix, content) {
     ['preproc_ifdef' + suffix]: $ => seq(
       choice(preprocessor('ifdef'), preprocessor('ifndef')),
       field('name', $.identifier),
-      repeat(content($)),
+      //repeat(content($)),
       //field('alternative', optional(choice(elseBlock($), $.preproc_elifdef))),
       //preprocessor('endif'),
     ),
 
     ['preproc_else' + suffix]: $ => seq(
       preprocessor('else'),
-      repeat(content($)),
+      //repeat(content($)),
     ),
 
     ['preproc_elif' + suffix]: $ => seq(
       preprocessor('elif'),
       field('condition', $._preproc_expression),
       '\n',
-      repeat(content($)),
+      //repeat(content($)),
       //field('alternative', optional(elseBlock($))),
     ),
 
     ['preproc_elifdef' + suffix]: $ => seq(
       choice(preprocessor('elifdef'), preprocessor('elifndef')),
       field('name', $.identifier),
-      repeat(content($)),
+      //repeat(content($)),
       //field('alternative', optional(elseBlock($))),
     ),
 
