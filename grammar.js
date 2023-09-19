@@ -72,6 +72,13 @@ module.exports = grammar({
     [$._type_specifier, $._old_style_parameter_list],
     [$.parameter_list, $._old_style_parameter_list],
     [$._old_style_function_definition, $._declaration_modifiers],
+    [$.preproc_else],
+    [$.preproc_ifdef],
+    [$.preproc_elifdef],
+    [$.preproc_if],
+    [$.preproc_elif],
+    [$.preproc_ifdef_in_field_declaration_list],
+    [$.preproc_if_in_field_declaration_list],
   ],
 
   word: $ => $.identifier,
@@ -95,6 +102,10 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      $.preproc_else,
+      $.preproc_elif,
+      $.preproc_elifdef,
+      $.preproc_endif,
       $.struct_declaration,
       $.union_declaration,
       $.enum_declaration,
@@ -1336,16 +1347,16 @@ function preprocIf(suffix, content) {
       field('condition', $._preproc_expression),
       '\n',
       repeat(content($)),
-      field('alternative', optional(elseBlock($))),
-      preprocessor('endif'),
+      //field('alternative', optional(elseBlock($))),
+      //preprocessor('endif'),
     ),
 
     ['preproc_ifdef' + suffix]: $ => seq(
       choice(preprocessor('ifdef'), preprocessor('ifndef')),
       field('name', $.identifier),
       repeat(content($)),
-      field('alternative', optional(choice(elseBlock($), $.preproc_elifdef))),
-      preprocessor('endif'),
+      //field('alternative', optional(choice(elseBlock($), $.preproc_elifdef))),
+      //preprocessor('endif'),
     ),
 
     ['preproc_else' + suffix]: $ => seq(
@@ -1358,14 +1369,18 @@ function preprocIf(suffix, content) {
       field('condition', $._preproc_expression),
       '\n',
       repeat(content($)),
-      field('alternative', optional(elseBlock($))),
+      //field('alternative', optional(elseBlock($))),
     ),
 
     ['preproc_elifdef' + suffix]: $ => seq(
       choice(preprocessor('elifdef'), preprocessor('elifndef')),
       field('name', $.identifier),
       repeat(content($)),
-      field('alternative', optional(elseBlock($))),
+      //field('alternative', optional(elseBlock($))),
+    ),
+
+    ['preproc_endif']: $ => seq(
+      preprocessor('endif'),
     ),
   };
 }
