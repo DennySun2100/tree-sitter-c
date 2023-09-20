@@ -35,7 +35,7 @@ const PREC = {
 };
 
 module.exports = grammar({
-  name: 'c',
+  name: 'c_preproc',
 
   extras: $ => [
     /\s|\\\r?\n|\f/,

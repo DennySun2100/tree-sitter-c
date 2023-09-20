@@ -4,7 +4,7 @@
 
 using namespace v8;
 
-extern "C" TSLanguage *tree_sitter_c();
+extern "C" TSLanguage *tree_sitter_c_preproc();
 
 namespace {
 
@@ -18,7 +18,7 @@ void Init(Local<Object> exports, Local<Object> module) {
     Local<Function> constructor = Nan::GetFunction(tpl).ToLocalChecked();
     Local<Object>   instance =
         constructor->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
-    Nan::SetInternalFieldPointer(instance, 0, tree_sitter_c());
+    Nan::SetInternalFieldPointer(instance, 0, tree_sitter_c_preproc());
 
     Nan::Set(instance, Nan::New("name").ToLocalChecked(),
              Nan::New("c").ToLocalChecked());

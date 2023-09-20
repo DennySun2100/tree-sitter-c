@@ -22,14 +22,14 @@ let code = r#"
     }
 "#;
 let mut parser = Parser::new();
-parser.set_language(tree_sitter_c::language()).expect("Error loading C grammar");
+parser.set_language(tree_sitter_c_preproc::language()).expect("Error loading C grammar");
 let parsed = parser.parse(code, None);
 ```
 
 If you have any questions, please reach out to us in the [tree-sitter
 discussions] page.
 
-[language func]: https://docs.rs/tree-sitter-c/*/tree_sitter_c/fn.language.html
+[language func]: https://docs.rs/tree-sitter-c/*/tree_sitter_c_preproc/fn.language.html
 [Parser]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Parser.html
 [tree-sitter]: https://tree-sitter.github.io/
 [tree-sitter crate]: https://crates.io/crates/tree-sitter

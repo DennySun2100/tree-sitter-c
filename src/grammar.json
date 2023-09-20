@@ -1,5 +1,5 @@
 {
-  "name": "c",
+  "name": "c_preproc",
   "word": "identifier",
   "rules": {
     "translation_unit": {

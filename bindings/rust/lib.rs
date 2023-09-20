@@ -18,7 +18,7 @@
 //!     }
 //! "#;
 //! let mut parser = Parser::new();
-//! parser.set_language(tree_sitter_c::language()).expect("Error loading C grammar");
+//! parser.set_language(tree_sitter_c_preproc::language()).expect("Error loading C grammar");
 //! let parsed = parser.parse(code, None);
 //! # let parsed = parsed.unwrap();
 //! # let root = parsed.root_node();
@@ -33,14 +33,14 @@
 use tree_sitter::Language;
 
 extern "C" {
-    fn tree_sitter_c() -> Language;
+    fn tree_sitter_c_preproc() -> Language;
 }
 
 /// Returns the tree-sitter [Language][] for this grammar.
 ///
 /// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
 pub fn language() -> Language {
-    unsafe { tree_sitter_c() }
+    unsafe { tree_sitter_c_preproc() }
 }
 
 /// The source of the C tree-sitter grammar description.
