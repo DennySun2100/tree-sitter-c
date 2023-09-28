@@ -452,10 +452,6 @@
             "type": "SYMBOL",
             "name": "_preproc_expression"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
         }
       ]
     },
@@ -528,10 +524,6 @@
             "type": "SYMBOL",
             "name": "_preproc_expression"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
         }
       ]
     },
@@ -604,10 +596,6 @@
             "type": "SYMBOL",
             "name": "_preproc_expression"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
         }
       ]
     },
@@ -680,10 +668,6 @@
             "type": "SYMBOL",
             "name": "_preproc_expression"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
         }
       ]
     },

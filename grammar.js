@@ -1345,7 +1345,6 @@ function preprocIf(suffix, content) {
     ['preproc_if' + suffix]: $ => seq(
       preprocessor('if'),
       field('condition', $._preproc_expression),
-      '\n',
       //repeat(content($)),
       //field('alternative', optional(elseBlock($))),
       //preprocessor('endif'),
@@ -1367,7 +1366,6 @@ function preprocIf(suffix, content) {
     ['preproc_elif' + suffix]: $ => seq(
       preprocessor('elif'),
       field('condition', $._preproc_expression),
-      '\n',
       //repeat(content($)),
       //field('alternative', optional(elseBlock($))),
     ),
