@@ -790,7 +790,7 @@ module.exports = grammar({
       optional(field('alternative', $.else_clause)),
     )),
 
-    else_clause: $ => seq('else', $._statement),
+    else_clause: $ => seq('else', field('consequence', $._statement)),
 
     switch_statement: $ => seq(
       'switch',
