@@ -5052,6 +5052,19 @@
         }
       ]
     },
+    "for_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_declaration_specifiers"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_declaration_declarator"
+        }
+      ]
+    },
     "_for_statement_body": {
       "type": "SEQ",
       "members": [
@@ -5065,17 +5078,8 @@
                 "type": "CHOICE",
                 "members": [
                   {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "_declaration_specifiers"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "_declaration_declarator"
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "for_declaration"
                   },
                   {
                     "type": "SYMBOL",
