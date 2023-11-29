@@ -843,11 +843,13 @@ module.exports = grammar({
       ')',
       field('body', $._statement),
     ),
+    for_declaration: $ => seq(
+        $._declaration_specifiers,
+        $._declaration_declarator,
+    ),
     _for_statement_body: $ => seq(
-      choice(
-        field('initializer', $.declaration),
-        seq(field('initializer', optional(choice($._expression, $.comma_expression))), ';'),
-      ),
+      field('initializer', optional(choice($.for_declaration, $._expression, $.comma_expression))),
+      ';',
       field('condition', optional(choice($._expression, $.comma_expression))),
       ';',
       field('update', optional(choice($._expression, $.comma_expression))),
