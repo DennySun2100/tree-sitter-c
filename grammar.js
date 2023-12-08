@@ -681,7 +681,7 @@ module.exports = grammar({
       optional($.bitfield_clause),
     )),
 
-    bitfield_clause: $ => seq(':', $._expression),
+    bitfield_clause: $ => seq(':', field('value', $._expression)),
 
     enumerator: $ => seq(
       field('name', $.identifier),
@@ -771,15 +771,15 @@ module.exports = grammar({
 
     // This is missing binary expressions, others were kept so that macro code can be parsed better and code examples
     _top_level_expression_statement: $ => seq(
-      $._expression_not_binary,
+      field('expression', $._expression_not_binary),
       ';',
     ),
 
     expression_statement: $ => seq(
-      optional(choice(
+      field('expression', optional(choice(
         $._expression,
         $.comma_expression,
-      )),
+      ))),
       ';',
     ),
 
@@ -846,7 +846,7 @@ module.exports = grammar({
 
     return_statement: $ => seq(
       'return',
-      optional(choice($._expression, $.comma_expression)),
+      field('expression', optional(choice($._expression, $.comma_expression))),
       ';',
     ),
 
@@ -1154,7 +1154,7 @@ module.exports = grammar({
 
     parenthesized_expression: $ => seq(
       '(',
-      choice($._expression, $.comma_expression),
+      field('expression', choice($._expression, $.comma_expression)),
       ')',
     ),
 
