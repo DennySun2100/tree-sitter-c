@@ -888,7 +888,7 @@ module.exports = grammar({
     // Expressions
 
     _expression: $ => choice(
-      field('argument',$._expression_not_binary),
+      $._expression_not_binary,
       $.binary_expression,
     ),
 
