@@ -544,6 +544,7 @@ module.exports = grammar({
       'restrict',
       '__restrict__',
       '__extension__',
+      '__unused',
       '_Atomic',
       '_Noreturn',
       'noreturn',

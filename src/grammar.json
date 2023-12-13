@@ -3625,6 +3625,10 @@
         },
         {
           "type": "STRING",
+          "value": "__unused"
+        },
+        {
+          "type": "STRING",
           "value": "_Atomic"
         },
         {
