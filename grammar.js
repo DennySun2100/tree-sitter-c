@@ -394,37 +394,37 @@ module.exports = grammar({
 
     parenthesized_declarator: $ => prec.dynamic(PREC.PAREN_DECLARATOR, seq(
       '(',
-      $._declarator,
+      field('declarator', $._declarator),
       ')',
     )),
     parenthesized_field_declarator: $ => prec.dynamic(PREC.PAREN_DECLARATOR, seq(
       '(',
-      $._field_declarator,
+      field('declarator', $._field_declarator),
       ')',
     )),
     parenthesized_type_declarator: $ => prec.dynamic(PREC.PAREN_DECLARATOR, seq(
       '(',
       optional($.ms_declspec_modifier),
-      $._type_declarator,
+      field('declarator', $._type_declarator),
       ')',
     )),
     abstract_parenthesized_declarator: $ => prec(1, seq(
       '(',
-      $._abstract_declarator,
+      field('declarator', $._abstract_declarator),
       ')',
     )),
 
 
     attributed_declarator: $ => prec.right(seq(
-      $._declarator,
+      field('declarator', $._declarator),
       repeat1($.attribute_declaration),
     )),
     attributed_field_declarator: $ => prec.right(seq(
-      $._field_declarator,
+      field('declarator', $._field_declarator),
       repeat1($.attribute_declaration),
     )),
     attributed_type_declarator: $ => prec.right(seq(
-      $._type_declarator,
+      field('type', $._type_declarator),
       repeat1($.attribute_declaration),
     )),
 
@@ -1405,5 +1405,5 @@ function commaSep(rule) {
  *
  */
 function commaSep1(rule) {
-  return seq(rule, repeat(seq(',', rule)));
+  return seq(rule, repeat(seq(field('comma', ','), rule)));
 }
