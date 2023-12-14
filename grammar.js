@@ -544,6 +544,7 @@ module.exports = grammar({
       'restrict',
       '__restrict__',
       '__extension__',
+      '__unused',
       '_Atomic',
       '_Noreturn',
       'noreturn',
@@ -833,8 +834,8 @@ module.exports = grammar({
       field('body', $._statement),
     ),
     for_declaration: $ => seq(
-        $._declaration_specifiers,
-        $._declaration_declarator,
+      $._declaration_specifiers,
+      $._declaration_declarator,
     ),
     _for_statement_body: $ => seq(
       field('initializer', optional(choice($.for_declaration, $._expression, $.comma_expression))),

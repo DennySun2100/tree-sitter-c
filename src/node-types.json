@@ -4392,6 +4392,10 @@
     "named": false
   },
   {
+    "type": "__unused",
+    "named": false
+  },
+  {
     "type": "__vectorcall",
     "named": false
   },
